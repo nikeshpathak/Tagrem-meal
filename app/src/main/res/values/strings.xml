@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">TagMeal</string>
+    <string name="hello_world">Welcome to tagrem meal reminder</string>
+    <string name="action_settings">Settings</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="tagremDomain">\@tagrem.com</string>
+    <string name="btn_submit">Submit</string>
+    <string name="dialog_title">Tagrem meal</string>
+    <string name="dialog_message">Would you like to have lunch in office?</string>
+    <string name="full_meal">Full meal</string>
+    <string name="mini_meal">Mini meal</string>
+    <string name="meal_for_fast">Meal for fast</string>
+    <string name="button_yes">Yes</string>
+    <string name="button_no">No</string>
+    <string name="no_network_message">No network available,please send your mail manually</string>
+
+    <!-- FONT FAIIMLY FOR Project -->
+    <declare-styleable name="customfont">
+        <attr name="android:fontFamily" />
+        <attr name="android:textStyle" />
+    </declare-styleable>
+
+</resources>
