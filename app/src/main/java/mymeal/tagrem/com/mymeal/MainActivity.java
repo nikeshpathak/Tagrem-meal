@@ -22,7 +22,7 @@ public class MainActivity extends Activity {
     String DomainName = "@tagrem.com";
     String emailaddresss;
     AlertDialog alertDialog;
-    TextView txtTitle;
+    TextView txtTitle,txtVersion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +50,14 @@ public class MainActivity extends Activity {
             txtUserName = (EditText) findViewById(R.id.txtUserName);
             txtPassword = (EditText) findViewById(R.id.txtPassword);
             txtTitle = (TextView)findViewById(R.id.txtTitle);
+            txtVersion = (TextView) findViewById(R.id.txtVersion);
+            try
+            {
+                txtVersion.setText("V "+BuildConfig.VERSION_NAME);
+            }
+            catch(Exception ex)
+            {
+            }
             txtTitle.setTypeface(typeface);
 
             btnSubmit.setOnClickListener(new View.OnClickListener() {
