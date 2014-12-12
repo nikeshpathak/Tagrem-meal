@@ -1,7 +1,9 @@
 package mymeal.tagrem.com.mymeal;
 
 import android.app.Activity;
+import android.app.KeyguardManager;
 import android.app.Service;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -10,8 +12,11 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.PowerManager;
+import android.os.Vibrator;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.RadioGroup;
 
 import mymeal.tagrem.com.mymeal.mail.Mail;
@@ -26,11 +31,16 @@ public class DialogActivity extends Activity{
     private static String Email;
     private static String Password;
     Ringtone ringtone;
+    protected  PowerManager.WakeLock wakeLock;
+    KeyguardManager km;
+    KeyguardManager.KeyguardLock kl;
+    boolean isRunning = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.dialog_activity);
         Typeface typeface = Typeface.createFromAsset(getAssets(), "capture_it.ttf");
         Email = Utility.GetStoreData(DialogActivity.this,"EMAIL");
@@ -39,6 +49,38 @@ public class DialogActivity extends Activity{
         customDialog.setCancelable(false);
         customDialog.txtDialogTitle.setTypeface(typeface);
         customDialog.show();
+
+        try {
+            PowerManager TempPowerManager = (PowerManager) DialogActivity.this.getSystemService(Context.POWER_SERVICE);
+            wakeLock = TempPowerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP |
+                    PowerManager.ON_AFTER_RELEASE, "TempWakeLock");
+            km = (KeyguardManager) DialogActivity.this.getSystemService(Context.KEYGUARD_SERVICE);
+            kl = km.newKeyguardLock("INFO");
+            wakeLock.acquire();
+            kl.disableKeyguard();
+        }
+        catch(Exception ex)
+        {
+        }
+        isRunning = true;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    while (isRunning) {
+                        Thread.sleep(300);
+                        Vibrator v = (Vibrator) DialogActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
+                        // Vibrate for 500 milliseconds
+                        v.vibrate(100);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Utility.Log(ex.getMessage(), Utility.LogType.ERROR);
+                }
+            }
+        }).start();
+
         Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
          ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
         ringtone.play();
@@ -48,8 +90,9 @@ public class DialogActivity extends Activity{
             public void onClick(View v) {
                 customDialog.dismiss();
                 ringtone.stop();
-                startService(new Intent(DialogActivity.this,SendMailService.class));
+                startService(new Intent(DialogActivity.this, SendMailService.class));
                 finish();
+                isRunning = false;
             }
         });
 
@@ -85,6 +128,14 @@ public class DialogActivity extends Activity{
             }
         });
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(wakeLock !=null)
+            wakeLock.release();
+        isRunning = false;
     }
 
     @Override

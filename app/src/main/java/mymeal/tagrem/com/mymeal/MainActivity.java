@@ -3,14 +3,10 @@ package mymeal.tagrem.com.mymeal;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -41,6 +37,7 @@ public class MainActivity extends Activity {
                 alertDialog = Utility.showDialog(MainActivity.this, "", "Tagrem meal system already activated on your phone", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                MealReciver.StartAlarmManager(MainActivity.this);
                                 alertDialog.dismiss();
                                 finish();
                             }
@@ -99,7 +96,7 @@ public class MainActivity extends Activity {
         AsynExecute(String username, String password) {
             this.username = username;
             this.password = password;
-            this.message = "Hello this is auto genrated mail form tagrem meal system.";
+            this.message = "Hello this is auto generated mail form tagrem meal system.";
         }
 
 

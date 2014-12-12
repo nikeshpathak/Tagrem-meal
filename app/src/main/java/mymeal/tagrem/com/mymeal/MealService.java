@@ -22,7 +22,7 @@ public class MealService extends Service{
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         try {
-                if(Utility.isTimeToAlarm()) {
+               if(Utility.isTimeToAlarm()) {
                     Intent myintent = new Intent(MealService.this, DialogActivity.class);
                     myintent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(myintent);

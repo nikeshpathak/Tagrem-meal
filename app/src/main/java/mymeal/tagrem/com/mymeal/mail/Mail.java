@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.sun.mail.imap.Utility;
 
+import org.apache.http.auth.AuthenticationException;
+
 import java.util.Date;
 import java.util.Properties;
 
@@ -88,8 +90,6 @@ public class Mail extends javax.mail.Authenticator {
         }
         catch (Exception ex)
         {
-            ex.printStackTrace();
-            Log.e("Mail",ex.getMessage());
             return false;
         }
     }

@@ -233,10 +233,11 @@ public class Utility {
     public static Boolean isTimeToAlarm()
     {
         Calendar calendar = Calendar.getInstance();
-      if(calendar.get(Calendar.HOUR) == 9 && calendar.get(Calendar.MINUTE)<30 && calendar.get(Calendar.AM_PM)==Calendar.AM)
-      {
-          return true;
-      }
+                if(calendar.get(Calendar.DAY_OF_WEEK)!= Calendar.SUNDAY && calendar.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY) {
+                    if (calendar.get(Calendar.HOUR) == 9 && calendar.get(Calendar.MINUTE) < 30 && calendar.get(Calendar.AM_PM) == Calendar.AM) {
+                        return true;
+                    }
+                }
         return false;
     }
 }

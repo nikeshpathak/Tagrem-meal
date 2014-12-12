@@ -28,13 +28,13 @@ public class MealReciver extends BroadcastReceiver{
         Intent alarmIntent = new Intent(context, MealService.class);
         PendingIntent pendingIntent = PendingIntent.getService(context, 0, alarmIntent, 0);
         AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 9);
-        calendar.set(Calendar.MINUTE, 5);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        calendar.set(Calendar.AM_PM,Calendar.AM);
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.set(Calendar.HOUR_OF_DAY, 11);
+//        calendar.set(Calendar.MINUTE, 40);
+//        calendar.set(Calendar.SECOND, 0);
+//        calendar.set(Calendar.MILLISECOND, 0);
+//        calendar.set(Calendar.AM_PM,Calendar.AM);
       //  manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
-        manager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),TimeUnit.HOURS.toMillis(24),pendingIntent);
+        manager.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis(),TimeUnit.MINUTES.toMillis(30),pendingIntent);
     }
 }
